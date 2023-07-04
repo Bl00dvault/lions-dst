@@ -1,0 +1,32 @@
+[
+    {
+        "ExerciseName": "DST-1",
+        "Track": "DCO",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification",
+            "What is the purpose of a firewall?" : "To control and monitor network traffic",
+            "What is the best practice for creating strong passwords?" : "Using a combination of uppercase and lowercase letters, numbers, and special characters"
+        }
+    },
+    {
+        "ExerciseName": "DST-2",
+        "Track": "DCO",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification"
+        }
+    },
+    {
+        "ExerciseName": "OST-1",
+        "Track": "OCO",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification"
+        }
+    },
+    {
+        "ExerciseName": "TP-1",
+        "Track": "Combined",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification"
+        }
+    }
+]
