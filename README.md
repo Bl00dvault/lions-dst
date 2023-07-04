@@ -1,9 +1,9 @@
-# Lions - Defensive Skills Training
+# Lions - Part Task Trainer
 A testing web server created to validate student responses to test questions and to guide through defensive skills training exercises.
 
 ## Goals
-- Create a web UI that students can input answers into defensive cyber skills training exercises in order to validate learning
-- Future: Use the web server to query current state in remote machines in order to validate answers (think a question/problem that requires student to remove malicious activity from a device, and the server can check whether the student was successful or not)
+- Create a web UI that students can input answers into part task trainer exercises
+- Future: Use the web server to query current state in remote machines in order to validate answers (think a question/problem that requires student to remove malicious activity from a device and the server can check whether the student was successful or not)
 
 ## TODO
 - Fix session so it does not persist filled in answers after server restarts
