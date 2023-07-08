@@ -44,6 +44,24 @@ input[type="submit"]:hover {
     color: #1c1a37;
 }
 
+.btn-small {
+    display: inline-block;
+    background-color: #000000;
+    color: #ddc42e;
+    font-size: 12px; /* Smaller font size */
+    font-weight: bold;
+    text-align: center;
+    padding: 6px 12px; /* Smaller padding */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Smaller margin */
+}
+
+.btn-small:hover {
+    background-color: #ddc42e;
+    color: #1c1a37;
+}
+
 .result {
     font-size: 24px;
     font-weight: bold;

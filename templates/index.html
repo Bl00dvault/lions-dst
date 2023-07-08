@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='favicon.ico') }}">
+    {% include 'title.html' %}
     <title>
-        Lions Web PTT
+        Lions Web PTT - Home
     </title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     {% include 'navbar.html' %}

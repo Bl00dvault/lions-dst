@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
-app.secret_key = 'asdf123'
+app.secret_key = 'asdf1234'
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -40,8 +41,19 @@ class User(UserMixin, db.Model):
         return str(self.id)
 
 # Instantiate the new database
-with app.app_context():
+def init_db():
     db.create_all()
+    
+    # check if admin exists
+    admin = User.query.filter_by(username='admin').first()
+    
+    # if admin does not exist, create one
+    if admin is None:
+        admin = User(username='admin')
+        admin.set_password('asdf')
+        admin.is_admin = True
+        db.session.add(admin)
+        db.session.commit()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -75,18 +87,110 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        is_admin = 'is_admin' in request.form
 
-        user = User(username=username)
-        user.set_password(password)
+        if is_admin:
+            if not current_user.is_admin:
+                return "Unauthorized", 403
+            else:
+                user = User(username=username)
+                user.set_password(password)
+                user.is_admin = is_admin
 
-        db.session.add(user)
-        db.session.commit()
+                db.session.add(user)
+                db.session.commit()
+        else:
+            user = User(username=username)
+            user.set_password(password)
+
+            db.session.add(user)
+            db.session.commit()
 
         return redirect(url_for('login'))
     else:
         return render_template('register.html')
 
+@app.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == 'POST':
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        confirm_password = request.form['confirm_password']
 
+        if not current_user.check_password(current_password):
+            return "Incorrect current password"
+
+        if new_password != confirm_password:
+            return "New password and confirmation password do not match"
+
+        current_user.set_password(new_password)
+        db.session.commit()
+        
+        return redirect(url_for('home'))
+
+    else:
+        return render_template('change_password.html')
+
+@app.route('/user_management', methods=['GET', 'POST'])
+@login_required
+def user_management():
+    if not current_user.is_admin:
+        return "Unauthorized", 403
+
+    if request.method == 'POST':
+        if 'delete_user_id' in request.form:
+            delete_user_id = request.form['delete_user_id']
+            # prevent deleting own account
+            if str(current_user.id) == delete_user_id:
+                return "Error: You can't delete your own account", 400
+            # prevent deleting 'admin' account
+            elif delete_user_id == "1":
+                return "Error: You can't delete the 'admin' account", 400
+            else:
+                User.query.filter_by(id=delete_user_id).delete()
+                db.session.commit()
+
+        elif 'make_admin_id' in request.form:
+            make_admin_id = request.form['make_admin_id']
+            user = User.query.get(make_admin_id)
+            user.is_admin = True
+            db.session.commit()
+
+        else:
+            user_id = request.form['user_id']
+            new_password = request.form['new_password']
+            user = User.query.get(user_id)
+            user.set_password(new_password)
+            db.session.commit()
+            
+    users = User.query.all()
+    return render_template('user_management.html', users=users)
+
+    #         user = User.query.get(user_id)
+    #         if not user:
+    #             return "User not found", 404
+
+    #         db.session.delete(user)
+    #         db.session.commit()
+
+    #     else:
+    #         user_id = request.form['user_id']
+    #         new_password = request.form['new_password']
+
+    #         user = User.query.get(user_id)
+    #         if not user:
+    #             return "User not found", 404
+
+    #         user.set_password(new_password)
+    #         db.session.commit()
+
+    #     return redirect(url_for('user_management'))
+
+    # else:
+    #     users = User.query.all()
+    #     return render_template('user_management.html', users=users)
+    
 # Load exercise questions and correct answers from JSON
 with open('exercises.json', 'r') as file:
     exercise_data = json.load(file)
@@ -102,9 +206,15 @@ for id, track_name in exercise_track.items():
         exercises_by_track[track_name] = []
     exercises_by_track[track_name].append((id, exercises[id]))
 
-@app.route('/')
-def home():
-    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
+@app.route('/clear', methods=['GET'])
+def clear():
+    exercise_id = request.args.get('id')
+    
+    # Loop over the session keys for this exercise and delete them
+    for i in range(len(session)):
+        session.pop(f'{exercise_id}_{i}', None)
+    
+    return redirect(url_for('exercise', id=exercise_id))
 
 @app.route('/exercise', methods=['GET', 'POST'])
 def exercise():
@@ -178,7 +288,13 @@ def result(id):
     for i, answer in enumerate(student_answers):
         session[f'{exercise_id}_{i}'] = answer
 
-    return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions)
+    return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions, correct_answers=correct_answers)
+
+@app.route('/')
+def home():
+    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
 
 if __name__ == '__main__':
+    with app.app_context():
+        init_db()
     app.run(debug=True)

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'title.html' %}
     <title>Lions Web PTT - Exercise</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container">
         <h1>{{ exercises[id] }}</h1>
         <form action="{{ url_for('result', id=id) }}" method="POST">
@@ -21,6 +20,7 @@
             {% endfor %}
             <button type="submit" class="btn">Submit</button>
             <a href="/" class="btn">Return to Home</a>
+            <a href="{{ url_for('clear', id=id) }}" class="btn">Clear Answers</a>
         </form>
     </div>
 </body>

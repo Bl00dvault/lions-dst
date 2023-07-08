@@ -28,5 +28,12 @@
         "Questions": {
             "What is the first step in the incident response process?": "Identification"
         }
+    },
+    {
+        "ExerciseName": "WST-2",
+        "Track": "Combined",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification"
+        }
     }
 ]
