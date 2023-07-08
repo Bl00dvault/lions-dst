@@ -1,9 +1,91 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import json
+import os
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'asdf123'
+
+# Create login database
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+    
+    @property
+    def is_authenticated(self):
+        return True
+    
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
+
+# Instantiate the new database
+with app.app_context():
+    db.create_all()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))  # Fetch the user from the database
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = User.query.filter_by(username=username).first()
+
+        if user is None or not user.check_password(password):
+            return "Invalid username or password"
+
+        login_user(user)  # Log in the user
+        return redirect(url_for('home'))
+
+    else:
+        return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = User(username=username)
+        user.set_password(password)
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    else:
+        return render_template('register.html')
+
 
 # Load exercise questions and correct answers from JSON
 with open('exercises.json', 'r') as file:
@@ -22,7 +104,7 @@ for id, track_name in exercise_track.items():
 
 @app.route('/')
 def home():
-    return render_template('index.html', exercises=exercises, tracks=exercises_by_track)
+    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
 
 @app.route('/exercise', methods=['GET', 'POST'])
 def exercise():

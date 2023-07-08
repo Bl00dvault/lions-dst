@@ -49,3 +49,22 @@ input[type="submit"]:hover {
     font-weight: bold;
     margin-bottom: 30px;
 }
+
+/* Top Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background-color: #ddc42e;
+  }
+  
+  .navbar a {
+    margin-right: 1em;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    color: #ffffff;
+    font-weight: bolder;
+  }
