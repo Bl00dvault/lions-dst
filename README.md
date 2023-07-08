@@ -9,6 +9,7 @@ A testing web server created to validate student responses to test questions and
 [ ] Fix session so it does not persist filled in answers after server restarts
 [x] Add login functionality
 [ ] Add functionality to store student answers by username and attempt
+[ ] Add test to see if 'tmp' folder exists to hold db, and if it doesn't exist to create it
 [ ] Add admin login to clear all answers or clear answers for specific exercise and for specific student
 [ ] Add option on results to show the correct answer if you press a button next to the question
 [ ] Build user stories to help optimize

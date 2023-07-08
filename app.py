@@ -11,7 +11,7 @@ app.secret_key = 'asdf123'
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'tmp/test.db')
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
