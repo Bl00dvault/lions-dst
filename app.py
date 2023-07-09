@@ -2,12 +2,11 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import json
-import os
+import json, os, time, datetime
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
-app.secret_key = 'asdf1234'
+app.secret_key = 'asdf12345'
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -39,6 +38,17 @@ class User(UserMixin, db.Model):
 
     def get_id(self):
         return str(self.id)
+
+class TestResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    assignment_id = db.Column(db.Integer)
+    score = db.Column(db.Integer)
+    time_to_complete = db.Column(db.Float, nullable=False)
+    answers = db.Column(db.String(500))
+
+    def __repr__(self):
+        return f'<TestResult {self.id}>'
 
 # Instantiate the new database
 def init_db():
@@ -166,30 +176,6 @@ def user_management():
             
     users = User.query.all()
     return render_template('user_management.html', users=users)
-
-    #         user = User.query.get(user_id)
-    #         if not user:
-    #             return "User not found", 404
-
-    #         db.session.delete(user)
-    #         db.session.commit()
-
-    #     else:
-    #         user_id = request.form['user_id']
-    #         new_password = request.form['new_password']
-
-    #         user = User.query.get(user_id)
-    #         if not user:
-    #             return "User not found", 404
-
-    #         user.set_password(new_password)
-    #         db.session.commit()
-
-    #     return redirect(url_for('user_management'))
-
-    # else:
-    #     users = User.query.all()
-    #     return render_template('user_management.html', users=users)
     
 # Load exercise questions and correct answers from JSON
 with open('exercises.json', 'r') as file:
@@ -244,6 +230,9 @@ def exercise():
         # Get all previously submitted answers for this exercise
         answers = [session.get(f'{exercise_id}_{i}', '') for i in range(len(questions))]
 
+        # Store the current time as the start time for this exercise
+        session['start_time'] = time.time()
+
         return render_template('exercise.html', id=exercise_id, questions=questions, answers=answers, exercises=exercises)
 
 
@@ -251,6 +240,9 @@ def exercise():
 def exercise_with_id(id):
     exercise_id = request.form['exercise_id']
     student_answers = request.form.getlist('answer')
+
+    # Store the current time as the start time for this exercise
+    session['start_time'] = time.time()
     
     correct_answers = exercise_answers.get(exercise_id)
     result_text = []
@@ -274,9 +266,10 @@ def result(id):
     student_answers = request.form.getlist('answer')
     exercise_name = exercises.get(exercise_id)
     questions = exercise_questions.get(exercise_id)
-    
     correct_answers = exercise_answers.get(exercise_id)
     result_text = []
+    start_time = session.get('start_time')
+    end_time = time.time()  # The current time is the end time of the test
 
     for student_answer, correct_answer in zip(student_answers, correct_answers):
         if student_answer.lower() == correct_answer.lower():
@@ -284,11 +277,26 @@ def result(id):
         else:
             result_text.append('Incorrect!')
     
+    # Calculate the score as the number of correct answers
+    score = int(result_text.count('Correct!') / len(questions) * 100)
+
     # Store the submitted answers in the session
     for i, answer in enumerate(student_answers):
         session[f'{exercise_id}_{i}'] = answer
+    
+    # Store the test result in the database
+    time_to_complete = int(end_time - start_time)
+    test_result = TestResult(
+        user_id=session.get('user_id', 1),  # Use a default user_id if none is in the session
+        assignment_id=exercise_id,
+        score=score,
+        time_to_complete=time_to_complete,
+        answers=json.dumps(student_answers)  # Store the answers as a JSON string
+    )
+    db.session.add(test_result)
+    db.session.commit()
 
-    return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions, correct_answers=correct_answers)
+    return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions, correct_answers=correct_answers, exercises=exercises, test_result=test_result)
 
 @app.route('/')
 def home():

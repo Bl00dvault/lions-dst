@@ -1,29 +1,4 @@
 /* styles.css */
-
-body {
-    background-color: #1c1a37;
-    color: #ddc42e;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px;
-}
-
-h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-p {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 .btn,
 input[type="submit"] {
     display: inline-block;
@@ -68,21 +43,49 @@ input[type="submit"]:hover {
     margin-bottom: 30px;
 }
 
-/* Top Navigation Bar */
-.navbar {
+#description {
+    margin-left: 2em;
+    margin-top: 2em;
+}
+
+#content {
+    margin-top: 2em;
     display: flex;
-    justify-content: space-between;
-    padding: 1em;
-    background-color: #ddc42e;
-  }
-  
-  .navbar a {
-    margin-right: 1em;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .navbar a:hover {
-    color: #ffffff;
-    font-weight: bolder;
-  }
+    justify-content: center;
+    flex-grow: 1;
+}
+#content-2 {
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    flex-direction: column;
+}
+#content-track {
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15em;
+    flex-grow: 1;
+}
+#navbarNavDropdown {
+    display: flex;
+}
+
+#sidebar-content {
+    display: none;
+}
+
+#sidebar-wrapper.toggled #sidebar-content {
+    display: block;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+}

@@ -1,36 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'title.html' %}
-    <title>
-        Lions Web PTT - Change Password
-    </title>
-</head>
-<body>
-    {% include 'navbar.html' %}
-    <div class="container">
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - User Management
+{% endblock %}
+{% block content %}
+    <div id="description">
         <h1>User Management</h1>
-            {% for user in users %}
-
-                <form action="{{ url_for('user_management') }}" method="post">
-                    <input type="hidden" name="delete_user_id" value="{{ user.id }}" >
-                    User: {{ user.username }} /
-                    <span>Admin: {{ "Yes" if user.is_admin else "No" }}</span>
-                    <button type="submit" class="btn-small" name="delete">Delete User</button>
-                </form>
-                <form action="{{ url_for('user_management') }}" method="post">
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <label>New Password:</label>
-                    <input type="password" name="new_password" required>
-                    <button type="submit" class="btn-small">Change Password</button>
-                </form>
-                <form action="{{ url_for('user_management') }}" method="post">
-                    <input type="hidden" name="make_admin_id" value="{{ user.id }}">
-                    <button type="submit" class="btn-small">Make Admin</button>
-                </form>
-
-            {% endfor %}
-            <a href="{{ url_for('register') }}" class="btn">Add User</a>
     </div>
-</body>
-</html>
+    <div id="content2">
+    {% for user in users %}
+        <span>Username: {{ user.username }}<br></span>
+        <span>Privileges: {{ "Administrator" if user.is_admin else "User" }}</span>
+        <form action="{{ url_for('user_management') }}" method="post">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <label>New Password:</label>
+            <input type="password" name="new_password" required>
+            <button type="submit" class="btn-small">Change Password</button>
+        </form>
+        <div style="display: flex; flex-direction: row;padding-bottom: 2em;">
+        <form action="{{ url_for('user_management') }}" method="post">
+            <input type="hidden" name="delete_user_id" value="{{ user.id }}" >
+            <button type="submit" class="btn-small" name="delete">Delete User</button>
+        </form>
+        <form action="{{ url_for('user_management') }}" method="post">
+            <input type="hidden" name="make_admin_id" value="{{ user.id }}">
+            <button type="submit" class="btn-small">Make Admin</button>
+        </form>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('register') }}" class="btn">Add User</a>
+    </div>
+{% endblock %}

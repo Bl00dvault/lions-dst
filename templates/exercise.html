@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'title.html' %}
-    <title>Lions Web PTT - Exercise</title>
-</head>
-<body>
-    {% include 'navbar.html' %}
-    <div class="container">
-        <h1>{{ exercises[id] }}</h1>
-        <form action="{{ url_for('result', id=id) }}" method="POST">
-            <input type="hidden" name="exercise_id" value="{{ id }}">
-            {% for question, answer in zip(questions, answers) %}
-            <div class="question">
-                <p>{{ question }}</p>
-            </div>
-            <label for="answer">Your Answer:</label>
-            <input type="text" id="answer" name="answer" required value="{{ answer }}">
-            <br>
-            {% endfor %}
-            <button type="submit" class="btn">Submit</button>
-            <a href="/" class="btn">Return to Home</a>
-            <a href="{{ url_for('clear', id=id) }}" class="btn">Clear Answers</a>
-        </form>
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - {{ exercises[id] }}
+{% endblock %}
+{% block content %}
+    <h1>{{ exercises[id] }}</h1>
+    <form action="{{ url_for('result', id=id) }}" method="POST">
+        <input type="hidden" name="exercise_id" value="{{ id }}">
+        {% for question, answer in zip(questions, answers) %}
+        <div class="question">
+            <p>{{ question }}</p>
+        </div>
+        <label for="answer">Your Answer:</label>
+        <input type="text" id="answer" name="answer" required value="{{ answer }}">
+        <br>
+        {% endfor %}
+        <button type="submit" class="btn">Submit</button>
+        <a href="/" class="btn">Return to Home</a>
+        <a href="{{ url_for('clear', id=id) }}" class="btn">Clear Answers</a>
+    </form>
+{% endblock %}

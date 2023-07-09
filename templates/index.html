@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'title.html' %}
-    <title>
-        Lions Web PTT - Home
-    </title>
-</head>
-<body>
-    {% include 'navbar.html' %}
-    <div class="container">
-        <h1>32 WPS Part Task Trainer</h1>
-        <p>Welcome to the Lions Cyber Skills Training platform!<br />
-        Enhance your cybersecurity knowledge and validate your learning by participating in our interactive exercises.</p>
-        {% for track_name, exercises in tracks.items() %}
-        <h2>{{ track_name }}</h2>
-        <ul>
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - Home
+{% endblock %}
+{% block content %}
+    <div id="description">
+        <h4>Welcome to the Lions Cyber Skills Training platform!<br /></h4>
+        <h5>Enhance your cybersecurity knowledge and validate your learning by participating in our interactive exercises.</h5>
+    </div>
+    <div id="content">
+    {% for track_name, exercises in tracks.items() %}
+    <div id="content-track"><h3>{{ track_name }}</h3>
             {% for id, exercise in exercises %}
             <p><a href="{{ url_for('exercise', id=id) }}" class="btn">{{ exercise }}</a></p>
             {% endfor %}
-        </ul>
-        {% endfor %}
     </div>
-</body>
-</html>
+    {% endfor %}
+    </div>
+{% endblock %}

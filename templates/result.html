@@ -1,33 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - {{ exercises[id] }} Results
+{% endblock %}
+{% block content %}
     <script>
-        function showAnswer(index) {
-            var correctAnswer = document.getElementById('correct_answer_' + index);
-            if (correctAnswer.style.display === "none") {
-                correctAnswer.style.display = "block";
-            } else {
-                correctAnswer.style.display = "none";
-            }
+    function showAnswer(index) {
+        var correctAnswer = document.getElementById('correct_answer_' + index);
+        if (correctAnswer.style.display === "none") {
+            correctAnswer.style.display = "block";
+        } else {
+            correctAnswer.style.display = "none";
         }
-        </script>
-    {% include 'title.html' %}
-</head>
-<body>
-    {% include 'navbar.html' %}
-    <div class="container">
-        <h1>Results</h1>
+    }
+    </script>
+    <div id="description">
+    <h1>Results</h1>
+    </div>
+    <div class="content2">
         {% for question, result, answer, correct_answer in zip(questions, result, answers, correct_answers) %}
-        <div class="result">
             <p>Question: {{ question }}</p>
             <p>Result: <u>{{ result }}</u></p>
             <p>Your answer: {{ answer }}</p>
             <p id="correct_answer_{{ loop.index }}" style="display: none;">Correct answer: {{ correct_answer }}</p>
             <button class="btn-small" onclick="showAnswer({{ loop.index }})">Show Correct Answer</button>
-        </div>
+            <hr class="solid" style="border-top: 3px solid #fff;">
         {% endfor %}
-        <a href="{{ url_for('exercise', id=id) }}" class="btn">Back to {{ exercise_name }}</a>
-        <a href="/" class="btn">Return to Home</a>
+        <p>Score: {{test_result.score }} %</p>
+        <p>Time to Complete: {{test_result.time_to_complete }} seconds</p>
     </div>
-</body>
-</html>
+    <a href="{{ url_for('exercise', id=id) }}" class="btn">Back to {{ exercise_name }}</a>
+    <a href="/" class="btn">Return to Home</a>
+{% endblock %}
