@@ -11,6 +11,7 @@
   - [ ] Add error checking to do show message if already an admin
 - [x] 7/7 Add admin only page to show current users
 - [x] 7/8 Add storing user test scores per assignment (with additional data such as time to complete, right/wrong answers, etc.)
+- [ ] Add option to be able to export test scores to a file
 
 ## UI
 - [x] 7/7 Pretty up UI, and add 32 WPS logo to title
