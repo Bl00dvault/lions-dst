@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - Test Results
+{% endblock %}
+{% block content %}
+    <div id="description">
+        <h1>All Test Results</h1>
+    </div>
+    <div class="content-testresults">
+    {% for username, results in results_by_user.items() %}
+        <div class="content">
+            <h2>User: {{ username }}</h2>
+            {% for result in results %}
+                <p>Assignment: {{ result.exercise_name }}</p>
+                <p>Score: {{ result.score }}</p>
+                <p>Time to Complete: {{ result.time_to_complete }} seconds</p>
+                <hr class="test-separator ">
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

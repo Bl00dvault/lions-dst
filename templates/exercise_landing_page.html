@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    Exercise {{ id }}
+{% endblock %}
+{% block content %}
+    <div id="description">
+        <h3>Academics:</h3> <h5>Use these links to access the academics for 'exercise_name'</h5> <h5 style="font-size: .85rem!important;">Note: Use the back button on the browser to return to this page</h5>
+        <h3>Lab Guide:</h3> <h5>Use these links to use a lab guide and walkthrough 'exercise_name'</h5>
+        <h3>Assessment:</h3> <h5>Use these links to test your understanding with 'exercise_name'</h5>
+    </div>
+    <div id="content-index">
+        <div class="content-2">
+            <h3>Academics</h3>
+            {% if not lab_guide_filenames %}
+                <a href="#" class="btn">No Academics Available</a>
+            {% endif %}
+            {% for filename in academics_filenames %}
+                <a href="{{ url_for('static', filename='academics/' ~ filename) }}" class="btn">{{ filename }}</a>
+            {% endfor %}
+        </div>
+        <div class="content-2">
+            <h3>Lab Guides</h3>
+            {% if not lab_guide_filenames %}
+                <a href="#" class="btn">No Lab Guide Available</a>
+            {% endif %}
+            {% for filename in lab_guide_filenames %}
+                <a href="{{ url_for('static', filename='academics/' ~ filename) }}" class="btn">{{ filename }}</a>
+            {% endfor %}
+        </div>
+        <div class="content-2">
+            <h3>Assessment</h3>
+            <a href="{{ url_for('exercise_assessment', id=id) }}" class="btn">Assessment</a>        
+        </div>
+    </div>
+{% endblock %}

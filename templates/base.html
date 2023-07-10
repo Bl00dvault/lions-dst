@@ -28,6 +28,7 @@
                         <a href="{{ url_for('change_password') }}" class="list-group-item list-group-item-action bg-dark">Change Password</a>
                         {% if current_user.is_admin %}
                             <a href="{{ url_for('user_management') }}" class="list-group-item list-group-item-action bg-dark">Administration</a>
+                            <a href="{{ url_for('all_results') }}" class="list-group-item list-group-item-action bg-dark">Test Scores</a>
                         {% endif %}
                     {% endif %}
                     <a href="{{ url_for('home') }}" class="list-group-item list-group-item-action bg-dark">Help</a>

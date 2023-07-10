@@ -15,10 +15,11 @@
 ## UI
 - [x] 7/7 Pretty up UI, and add 32 WPS logo to title
 - [x] 7/8 Add sidebar or some other mechanism of storing admin actions
-  - Added significant changes to base.html and revamped the sidebar, incorporating Google Classroom and Canvas elements
+  - 7/8 Added significant changes to base.html and revamped the sidebar, incorporating Google Classroom and Canvas elements
 - [x] 7/8 Research adding Google classroom/Canvas UI elements
   - [x] 7/8 [Google Classroom](https://www.youtube.com/watch?v=uODTp4yHXpI)
   - [x] 7/8 [Canvas](https://www.youtube.com/watch?v=PVfkFD45hL0)
+  - [ ] [Adobe Captivate](https://www.adobe.com/products/captivate.html)
 
 ## Exercises
 - [x] 7/7 Add option on results to show the correct answer if you press a button next to the question 
@@ -27,12 +28,14 @@
   - [ ] Separate issue of academics, lab walkthrough, and assessment
 - [ ] Add ability to display .pptx in web to have lessons alongside the exercise
 - [x] 7/8 Add functionality to store student answers by username and attempt
-  - [ ] Create a separate page that shows all test results that is organized by user
+  - [x] 7/9 Create a separate page that shows all test results that is organized by user
+    - Required to create a separate table for TestResults which now stores the information by user
 - [ ] Consider adding "close" answers if within X number of characters and provide feedback to student
 - [ ] Add option to provide feedback or highlight specific portions of academics/lab guide/assessment that are confusing
+- [ ] Add a way to increment the version of each exercise (whether updated from .json or from new .pdf)
 
 ## Debug
-- [ ] Add test to see if 'tmp' folder exists to hold db, and if it doesn't exist to create it
+- [x] 7/9 Add test to see if 'tmp' folder exists to hold db, and if it doesn't exist to create it
 - [ ] Fix all resources being loaded after every refresh (e.g., all static files)
 - [ ] Build user stories to help optimize
 - [ ] Build automated test cases

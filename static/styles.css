@@ -48,18 +48,38 @@ input[type="submit"]:hover {
     margin-top: 2em;
 }
 
+.content {
+    margin-top: 2em;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
 #content {
     margin-top: 2em;
     display: flex;
-    justify-content: center;
     flex-grow: 1;
+    flex-direction: column;
 }
-#content-2 {
+#content-index {
+    margin-top: 2em;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+}
+.content-2 {
     margin-top: 2em;
     display: flex;
     justify-content: center;
     flex-grow: 1;
     flex-direction: column;
+    padding-right: 2em;
+}
+.content-testresults{
+    padding-right: 1em;
+    display: flex;
+    flex-direction: row;
+    width: 40em;
+    flex-grow: 1;
 }
 #content-track {
     padding-right: 1em;
@@ -68,6 +88,15 @@ input[type="submit"]:hover {
     align-items: center;
     width: 15em;
     flex-grow: 1;
+}
+.test-separator{
+    height: 3px;
+    width: 80%;
+    color: #fff;
+    background-color: #fff;
+    text-align: left;
+    margin: 0 auto 0 0;
+    margin-bottom: 1em;
 }
 #navbarNavDropdown {
     display: flex;

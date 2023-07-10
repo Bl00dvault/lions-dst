@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, send_file
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import json, os, time, datetime
+import json, os, time, glob
+
+
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
@@ -10,6 +12,8 @@ app.secret_key = 'asdf12345'
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
+if not os.path.exists('tmp/'):
+    os.makedirs('tmp/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'tmp/test.db')
 db = SQLAlchemy(app)
 
@@ -50,6 +54,18 @@ class TestResult(db.Model):
     def __repr__(self):
         return f'<TestResult {self.id}>'
 
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    exercise_name = db.Column(db.String(64), unique=True, nullable=False)
+    track = db.Column(db.String(64), nullable=False)
+    questions = db.relationship('Question', backref='assignment', lazy=True)
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question_text = db.Column(db.String(255), nullable=False)
+    correct_answer = db.Column(db.String(255), nullable=False)
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
+
 # Instantiate the new database
 def init_db():
     db.create_all()
@@ -64,6 +80,25 @@ def init_db():
         admin.is_admin = True
         db.session.add(admin)
         db.session.commit()
+
+with app.app_context():
+    init_db()
+    with open('exercises.json', 'r') as file:
+        data = json.load(file)
+
+    for exercise in data:
+        assignment = Assignment.query.filter_by(exercise_name=exercise["ExerciseName"]).first()
+
+        if assignment is None:
+            assignment = Assignment(exercise_name=exercise["ExerciseName"], track=exercise["Track"])
+            db.session.add(assignment)
+            db.session.commit()  # Ensure each assignment has an ID before creating questions
+
+        for question_text, correct_answer in exercise["Questions"].items():
+            question = Question(question_text=question_text, correct_answer=correct_answer, assignment_id=assignment.id)
+            db.session.add(question)
+
+    db.session.commit()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -192,77 +227,81 @@ for id, track_name in exercise_track.items():
         exercises_by_track[track_name] = []
     exercises_by_track[track_name].append((id, exercises[id]))
 
-@app.route('/clear', methods=['GET'])
-def clear():
-    exercise_id = request.args.get('id')
+@app.route('/exercise/<int:id>', methods=['GET'])
+def exercise_landing_page(id):
+    # Fetch the assignment from the database
+    assignment = Assignment.query.get(id)
+
+    # If no assignment is found, return a 404 error
+    if assignment is None:
+        return "PDF file not found", 404
+
+    # Extract just the filenames for academics (remove the directory prefix)
+    lab_guide_filenames = sorted([f for f in os.listdir('static/academics') if f.startswith(f'{assignment.exercise_name}-Lab') and f.endswith('.pdf')])
+
+    # Extract just the filenames for labguides (remove the directory prefix)
+    academics_filenames = sorted([f for f in os.listdir('static/academics') if f.startswith(f'{assignment.exercise_name}') and f.endswith('Academics.pdf')])
+
+    # If no matching files are found, return an error
+    if not lab_guide_filenames:
+        return render_template('exercise_landing_page.html', id=id, lab_guide_filenames=lab_guide_filenames)
+    
+    return render_template('exercise_landing_page.html', id=id, lab_guide_filenames=lab_guide_filenames, academics_filenames=academics_filenames)
+
+@app.route('/exercise/<int:id>/clear', methods=['GET'])
+def exercise_clear(id):
+    exercise_id = str(id)
     
     # Loop over the session keys for this exercise and delete them
     for i in range(len(session)):
         session.pop(f'{exercise_id}_{i}', None)
     
-    return redirect(url_for('exercise', id=exercise_id))
+    return redirect(url_for('exercise_assessment', id=exercise_id))
 
-@app.route('/exercise', methods=['GET', 'POST'])
-def exercise():
+@app.route('/exercise/<int:id>/assessment', methods=['GET', 'POST'])
+def exercise_assessment(id):
+    exercise_id = str(id)
+    student_answers = request.form.getlist('answer')
+    exercise_name = exercises.get(exercise_id)
+
     if request.method == 'POST':
-        exercise_id = request.form['exercise_id']
-        student_answer = request.form['answer']
+        student_answers = request.form.getlist('answer')
+
+        # Store the current time as the start time for this exercise
+        session['start_time'] = time.time()
         
-        correct_answer = exercise_answers.get(exercise_id)
+        correct_answers = exercise_answers.get(id)
+        result_text = []
+
+        for student_answer, correct_answer in zip(student_answers, correct_answers):
+            if student_answer.lower() == correct_answer.lower():
+                result_text.append('Correct!')
+            else:
+                result_text.append('Incorrect!')
         
-        if student_answer.lower() == correct_answer.lower():
-            result_text = 'Correct!'
-        else:
-            result_text = 'Incorrect!'
-        
-        # Store the submitted answer in the session
-        session[exercise_id] = student_answer
-        
-        # Get all questions and previously submitted answers for this exercise
-        questions = exercise_questions.get(exercise_id)
-        answers = [session.get(f'{exercise_id}_{i}', '') for i in range(len(questions))]
-        
-        return render_template('exercise.html', id=exercise_id, questions=questions, answers=answers)
-    else:
-        exercise_id = request.args.get('id')
-        questions = exercise_questions.get(exercise_id)
+        # Store the submitted answers in the session
+        for i, answer in enumerate(student_answers):
+            session[f'{id}_{i}'] = answer
+
+        return render_template('result.html', result=result_text, id=id, answers=student_answers, exercises=exercises, exercise_name=exercise_name)
+    elif request.method == 'GET':
+        questions = exercise_questions.get(str(id))
+
+        if questions is None:
+            # Provide an appropriate message to the user or redirect to another page
+            return "No questions found for this exercise id", 400
 
         # Get all previously submitted answers for this exercise
-        answers = [session.get(f'{exercise_id}_{i}', '') for i in range(len(questions))]
+        answers = [session.get(f'{id}_{i}', '') for i in range(len(questions))]
 
         # Store the current time as the start time for this exercise
         session['start_time'] = time.time()
 
-        return render_template('exercise.html', id=exercise_id, questions=questions, answers=answers, exercises=exercises)
-
-
-@app.route('/exercise/<int:id>', methods=['GET'])
-def exercise_with_id(id):
-    exercise_id = request.form['exercise_id']
-    student_answers = request.form.getlist('answer')
-
-    # Store the current time as the start time for this exercise
-    session['start_time'] = time.time()
-    
-    correct_answers = exercise_answers.get(exercise_id)
-    result_text = []
-
-    for student_answer, correct_answer in zip(student_answers, correct_answers):
-        if student_answer.lower() == correct_answer.lower():
-            result_text.append('Correct!')
-        else:
-            result_text.append('Incorrect!')
-    
-    # Store the submitted answers in the session
-    for i, answer in enumerate(student_answers):
-        session[f'{exercise_id}_{i}'] = answer
-
-    return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercises=exercises)
-
+        return render_template('exercise.html', id=id, questions=questions, answers=answers, exercises=exercises, exercise_name=exercise_name)
 
 @app.route('/result/<int:id>', methods=['POST'])
 def result(id):
-    exercise_id = request.form['exercise_id']
+    exercise_id = str(id)
     student_answers = request.form.getlist('answer')
     exercise_name = exercises.get(exercise_id)
     questions = exercise_questions.get(exercise_id)
@@ -287,7 +326,7 @@ def result(id):
     # Store the test result in the database
     time_to_complete = int(end_time - start_time)
     test_result = TestResult(
-        user_id=session.get('user_id', 1),  # Use a default user_id if none is in the session
+        user_id=current_user.id,
         assignment_id=exercise_id,
         score=score,
         time_to_complete=time_to_complete,
@@ -297,6 +336,30 @@ def result(id):
     db.session.commit()
 
     return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions, correct_answers=correct_answers, exercises=exercises, test_result=test_result)
+
+@app.route('/all_results', methods=['GET'])
+def all_results():
+    # Ensure only admin users can access this page
+    if not current_user.is_admin:
+        return redirect(url_for('login'))
+
+    # Fetch all test results
+    test_results = db.session.query(TestResult, User, Assignment)\
+    .join(User, TestResult.user_id == User.id)\
+    .join(Assignment, TestResult.assignment_id == Assignment.id).all()
+
+    # Group test results by user
+    results_by_user = {}
+    for result, user, assignment in test_results:
+        if user.username not in results_by_user:
+            results_by_user[user.username] = []
+        results_by_user[user.username].append({
+            'exercise_name': assignment.exercise_name,
+            'score': result.score,
+            'time_to_complete': int(result.time_to_complete)
+        })
+
+    return render_template('all_results.html', results_by_user=results_by_user)
 
 @app.route('/')
 def home():

@@ -2803,7 +2803,8 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .btn:not(:disabled):not(.disabled) {
-    cursor: pointer
+    cursor: pointer;
+    margin-left: 2em
 }
 
 .btn:not(:disabled):not(.disabled).active,

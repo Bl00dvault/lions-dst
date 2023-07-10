@@ -16,6 +16,7 @@
         {% endfor %}
         <button type="submit" class="btn">Submit</button>
         <a href="/" class="btn">Return to Home</a>
-        <a href="{{ url_for('clear', id=id) }}" class="btn">Clear Answers</a>
+        <a href="{{ url_for('exercise_landing_page', id=id) }}" class="btn">Back to {{ exercise_name }} Landing Page</a>
+        <a href="{{ url_for('exercise_clear', id=id) }}" class="btn">Clear Answers</a>
     </form>
 {% endblock %}

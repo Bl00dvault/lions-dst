@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+    Lab Guide {{ id }}
+{% endblock %}
+{% block content %}
+    <div id="description">
+        <h3>The description of the labguide</h3>
+    </div>
+    <div id="content-index">
+        <embed src="{{ url_for('exercise_labguide', id=id) }}" type="application/pdf" width="100%" height="600px">
+    </div>
+{% endblock %}
