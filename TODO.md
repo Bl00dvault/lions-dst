@@ -24,20 +24,26 @@
 ## Exercises
 - [x] 7/7 Add option on results to show the correct answer if you press a button next to the question 
 - [x] 7/7 Add clear all answers option to top of exercise page
-- [ ] Add format to ingest new exercise/PTT as files and have the web page display
-  - [ ] Separate issue of academics, lab walkthrough, and assessment
-- [ ] Add ability to display .pptx in web to have lessons alongside the exercise
+- [x] 7/9 Add format to ingest new exercise/PTT as files and have the web page display
+  - Separate issue of academics, lab walkthrough, and assessment
+- [x] 7/9 Add ability to display .pptx in web to have lessons alongside the exercise
+  - Used the workaround of exporting .pptx to .pdf since it's only 3 clicks
 - [x] 7/8 Add functionality to store student answers by username and attempt
   - [x] 7/9 Create a separate page that shows all test results that is organized by user
     - Required to create a separate table for TestResults which now stores the information by user
 - [ ] Consider adding "close" answers if within X number of characters and provide feedback to student
 - [ ] Add option to provide feedback or highlight specific portions of academics/lab guide/assessment that are confusing
-- [ ] Add a way to increment the version of each exercise (whether updated from .json or from new .pdf)
+- [ ] Add a way to increment the version of each exercise (whether it was updated from .json or from new .pdf)
+
+## Packaging
+- [ ] Create a dockerfile for easy transport of the webserver
+- [ ] Test locally
+- [ ] Test at work
 
 ## Debug
 - [x] 7/9 Add test to see if 'tmp' folder exists to hold db, and if it doesn't exist to create it
 - [ ] Fix all resources being loaded after every refresh (e.g., all static files)
-- [ ] Build user stories to help optimize
+- [ ] Build user stories to ensure all features are captured
 - [ ] Build automated test cases
   - [ ] Unit tests for logins
   - [ ] Unit tests for exercises
