@@ -1,4 +1,3 @@
-# Version 1.0
 # Author: Thomas "Bl00dvault" Blauvelt
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -6,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import json, os, time
 
-
+__version__ = '1.1.1'
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
@@ -14,9 +13,9 @@ app.secret_key = 'asdf12345'
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
-if not os.path.exists('tmp/'):
-    os.makedirs('tmp/')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'tmp/test.db')
+if not os.path.exists('db/'):
+    os.makedirs('db/')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db/test.db')
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
@@ -365,7 +364,7 @@ def all_results():
 
 @app.route('/')
 def home():
-    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
+    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user, version=__version__)
 
 if __name__ == '__main__':
     with app.app_context():

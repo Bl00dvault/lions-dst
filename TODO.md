@@ -8,7 +8,7 @@
   - [x] 7/7 Add error checking so you can't delete your own user
   - [x] 7/7 Add ability to see admins on the page
   - [x] 7/7 Add function to make a user admin
-  - [ ] Add error checking to do show message if already an admin
+  - [ ] Add error checking to show message if already an admin
 - [x] 7/7 Add admin only page to show current users
 - [x] 7/8 Add storing user test scores per assignment (with additional data such as time to complete, right/wrong answers, etc.)
 - [ ] Add option to be able to export test scores to a file
@@ -40,16 +40,25 @@
 - [x] 7/10 Create a dockerfile for easy transport of the webserver
   - [ ] Need to create a volume to store academics
   - [ ] Create procedure for uploading new academics to docker volume
-- [ ] Test locally
+- [x] 7/10 Test locally
 - [ ] Test at work
 
 ## Debug
 - [x] 7/9 Add test to see if 'tmp' folder exists to hold db, and if it doesn't exist to create it
+- [x] 7/10 Create an automated method of updating the '__version__' variable in app.py based on code changes
+  - Note: the version information corresponds to the following:
+    - MAJOR version when you make incompatible API changes.
+    - MINOR version when you add functionality in a backwards-compatible manner.
+    - PATCH version when you make backwards-compatible bug fixes.
+  - '__version__' can be updated manually using git hooks and a bash script, but for portability sake I'll just update it manually. Now displayed on / page.
 - [ ] Fix all resources being loaded after every refresh (e.g., all static files)
 - [ ] Build user stories to ensure all features are captured
-- [ ] Build automated test cases
-  - [ ] Unit tests for logins
-  - [ ] Unit tests for exercises
+- [ ] Build automated unit tests
+  - [ ] Logins
+  - [ ] Assessments
+  - [ ] Displaying academics
+  - [ ] Displaying lab guides
+  - [ ] User management
 - [ ] Separate out app.py into logical pieces using imports
   - [ ] Utilize blueprints
 - [ ] Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
