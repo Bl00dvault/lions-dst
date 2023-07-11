@@ -7,16 +7,19 @@
         <h1>All Test Results</h1>
     </div>
     <div class="content-testresults">
-    {% for username, results in results_by_user.items() %}
-        <div class="content">
-            <h2>User: {{ username }}</h2>
-            {% for result in results %}
-                <p>Assignment: {{ result.exercise_name }}</p>
-                <p>Score: {{ result.score }}</p>
-                <p>Time to Complete: {{ result.time_to_complete }} seconds</p>
-                <hr class="test-separator ">
-            {% endfor %}
-        </div>
-    {% endfor %}
+        {% for username, results in results_by_user.items() %}
+            <div class="content">
+                <h2>User: {{ username }}</h2>
+                {% for result in results %}
+                    <p>Assignment: {{ result.exercise_name }}</p>
+                    <p>Score: {{ result.score }}</p>
+                    <p>Time to Complete: {{ result.time_to_complete }} seconds</p>
+                    <hr class="test-separator ">
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <form method="POST">
+            <input type="submit" style="position: fixed; bottom: 2em; left: 0; align-items: center;" value="Export to CSV">
+        </form>
     </div>
 {% endblock %}

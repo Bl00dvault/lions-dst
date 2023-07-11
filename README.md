@@ -7,6 +7,8 @@ A web server created to validate student learning in part task trainers and to g
 - Download bootstrap.css from https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
 - Download popper.js from https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js
 
+### Docker Setup
+[Click here for instructions](Dockerize.md)
 
 ## Goals
 - Create a web UI that students can input answers into part task trainer exercises

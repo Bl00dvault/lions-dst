@@ -3,10 +3,10 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import json, os, time
+import json, os, time, csv
 import keys
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
@@ -340,29 +340,51 @@ def result(id):
 
     return render_template('result.html', result=result_text, id=exercise_id, answers=student_answers, exercise_name=exercise_name, questions=questions, correct_answers=correct_answers, exercises=exercises, test_result=test_result)
 
-@app.route('/all_results', methods=['GET'])
+@app.route('/all_results', methods=['GET', 'POST'])
 def all_results():
     # Ensure only admin users can access this page
     if not current_user.is_admin:
         return redirect(url_for('login'))
 
-    # Fetch all test results
-    test_results = db.session.query(TestResult, User, Assignment)\
-    .join(User, TestResult.user_id == User.id)\
-    .join(Assignment, TestResult.assignment_id == Assignment.id).all()
+    if request.method == 'POST':
+        # Fetch all test results
+        test_results = db.session.query(TestResult, User, Assignment)\
+        .join(User, TestResult.user_id == User.id)\
+        .join(Assignment, TestResult.assignment_id == Assignment.id).all()
 
-    # Group test results by user
-    results_by_user = {}
-    for result, user, assignment in test_results:
-        if user.username not in results_by_user:
-            results_by_user[user.username] = []
-        results_by_user[user.username].append({
-            'exercise_name': assignment.exercise_name,
-            'score': result.score,
-            'time_to_complete': int(result.time_to_complete)
-        })
+        # specify the path to your csv file
+        csv_file_path = "scores/results.csv"
 
-    return render_template('all_results.html', results_by_user=results_by_user)
+        # open the file in write mode
+        with open(csv_file_path, "w", newline="") as csv_file:
+            writer = csv.writer(csv_file)
+            
+            # write the header
+            writer.writerow(["UserName","ExerciseName", "Score", "Time (seconds)"])
+                
+            for result, user, assignment in test_results:
+                writer.writerow([user.username, assignment.exercise_name, result.score, int(result.time_to_complete)])
+        
+        return "Results have been written to csv file.", 200
+
+    elif request.method == 'GET':
+        # Fetch all test results
+        test_results = db.session.query(TestResult, User, Assignment)\
+        .join(User, TestResult.user_id == User.id)\
+        .join(Assignment, TestResult.assignment_id == Assignment.id).all()
+
+        # Group test results by user
+        results_by_user = {}
+        for result, user, assignment in test_results:
+            if user.username not in results_by_user:
+                results_by_user[user.username] = []
+            results_by_user[user.username].append({
+                'exercise_name': assignment.exercise_name,
+                'score': result.score,
+                'time_to_complete': int(result.time_to_complete)
+            })
+
+        return render_template('all_results.html', results_by_user=results_by_user)
 
 @app.context_processor
 def inject_version():
