@@ -2,6 +2,7 @@
 .vscode/
 tmp/
 lions-web-ptt-demo.mp4
+web-ptt.tar
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

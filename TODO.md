@@ -37,7 +37,9 @@
 - [ ] Add a way to increment the version of each exercise (whether it was updated from .json or from new .pdf)
 
 ## Packaging
-- [ ] Create a dockerfile for easy transport of the webserver
+- [x] 7/10 Create a dockerfile for easy transport of the webserver
+  - [ ] Need to create a volume to store academics
+  - [ ] Create procedure for uploading new academics to docker volume
 - [ ] Test locally
 - [ ] Test at work
 

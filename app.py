@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, session, redirect, url_for, send_file
+# Version 1.0
+# Author: Thomas "Bl00dvault" Blauvelt
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import json, os, time, glob
+import json, os, time
 
 
 
@@ -368,4 +370,4 @@ def home():
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
