@@ -4,11 +4,11 @@
 {% endblock %}
 {% block content %}
     <div id="description">
-        <h3>Academics:</h3> <h5>Use these links to access the academics for 'exercise_name'</h5> <h5 style="font-size: .85rem!important;">Note: Use the back button on the browser to return to this page</h5>
-        <h3>Lab Guide:</h3> <h5>Use these links to use a lab guide and walkthrough 'exercise_name'</h5>
-        <h3>Assessment:</h3> <h5>Use these links to test your understanding with 'exercise_name'</h5>
+        <h3>Academics:</h3> <h5>Use these links to access the academics for {{ exercise_name }}</h5> <h5 style="font-size: .85rem!important;">Note: Use the back button on the browser to return to this page</h5>
+        <h3>Lab Guide:</h3> <h5>Use these links to use a lab guide and walkthrough {{ exercise_name }}</h5> <h5 style="font-size: .85rem!important;">Note: Use the back button on the browser to return to this page</h5>
+        <h3>Assessment:</h3> <h5>Use these links to test your understanding with {{ exercise_name }}</h5>
     </div>
-    <div id="content-index">
+    <div id="content-index" style="align-items: flex-start;">
         <div class="content-2">
             <h3>Academics</h3>
             {% if not lab_guide_filenames %}

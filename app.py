@@ -4,12 +4,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import json, os, time
+import keys
 
 __version__ = '1.1.1'
 
 app = Flask(__name__, static_url_path='/static')
 app.jinja_env.globals.update(zip=zip)
-app.secret_key = 'asdf12345'
+app.secret_key = keys.secret_key
 
 # Create login database
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -232,6 +233,7 @@ for id, track_name in exercise_track.items():
 def exercise_landing_page(id):
     # Fetch the assignment from the database
     assignment = Assignment.query.get(id)
+    exercise_name = assignment.exercise_name
 
     # If no assignment is found, return a 404 error
     if assignment is None:
@@ -247,7 +249,7 @@ def exercise_landing_page(id):
     if not lab_guide_filenames:
         return render_template('exercise_landing_page.html', id=id, lab_guide_filenames=lab_guide_filenames)
     
-    return render_template('exercise_landing_page.html', id=id, lab_guide_filenames=lab_guide_filenames, academics_filenames=academics_filenames)
+    return render_template('exercise_landing_page.html', id=id, lab_guide_filenames=lab_guide_filenames, academics_filenames=academics_filenames, exercise_name=exercise_name)
 
 @app.route('/exercise/<int:id>/clear', methods=['GET'])
 def exercise_clear(id):
@@ -362,9 +364,13 @@ def all_results():
 
     return render_template('all_results.html', results_by_user=results_by_user)
 
+@app.context_processor
+def inject_version():
+    return dict(version=__version__)
+
 @app.route('/')
 def home():
-    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user, version=__version__)
+    return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
 
 if __name__ == '__main__':
     with app.app_context():
