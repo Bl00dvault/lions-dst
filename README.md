@@ -2,6 +2,9 @@
 A web server created to validate student learning in part task trainers and to guide through cyber skills training exercises.
 
 ## Setup
+- Create keys.py with ```secret_key = 'SOME_TEXT'```
+
+## Downloads
 - Download bootstrap.js from https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js
 - Download jquery.js from https://code.jquery.com/jquery-3.2.1.slim.min.js
 - Download bootstrap.css from https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css

@@ -22,6 +22,7 @@
   - [x] 7/8 [Google Classroom](https://www.youtube.com/watch?v=uODTp4yHXpI)
   - [x] 7/8 [Canvas](https://www.youtube.com/watch?v=PVfkFD45hL0)
   - [ ] [Adobe Captivate](https://www.adobe.com/products/captivate.html)
+- [ ] Change menu to be a dropdown sidebar, rather than just a button to allow for growth and submenus
 
 ## Exercises
 - [x] 7/7 Add option on results to show the correct answer if you press a button next to the question 
@@ -64,3 +65,12 @@
   - [ ] Utilize blueprints
 - [ ] Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 
+## Cyber Trials
+- [ ] Develop User Stories/System Design layout for Cyber Trials
+- [ ] Deploy to an AWS instance
+- [ ] Create 'trial' ranges that can be used to assess defensive cyber skills and critical thinking
+  - [ ] Deploy ranges onto AWS using Ansible
+  - [ ] Identify pricing for a typical cyber trial range
+- [ ] Create scheduling module for Cyber Trials
+  - [ ] Develop role schema to allow trials admins to schedule range time
+- [ ] Update the help page for Cyber Trials
