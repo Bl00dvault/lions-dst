@@ -1,13 +1,15 @@
 # Author: Thomas "Bl00dvault" Blauvelt
+import json
+import os
 from flask import Flask, render_template
-from flask_login import LoginManager,current_user
-from flask_sqlalchemy import SQLAlchemy
-from blueprints.models import db, User, Assignment, Question
-import json, os, keys
-from blueprints.exercises import exercises_blueprint, exercises, exercises_by_track
+from flask_login import LoginManager, current_user
+import keys
+from blueprints.admin import admin_blueprint
+from blueprints.exercises import (exercises, exercises_blueprint,
+                                  exercises_by_track)
+from blueprints.models import Assignment, Question, User, db
 from blueprints.results import results_blueprint
 from blueprints.users import users_blueprint
-from blueprints.admin import admin_blueprint
 
 __version__ = '2.1.1'
 

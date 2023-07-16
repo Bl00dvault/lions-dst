@@ -1,5 +1,8 @@
-from flask import Blueprint, request, session, render_template, redirect, url_for
-import json, os, time
+import json
+import os
+import time
+from flask import (Blueprint, redirect, render_template, request, session,
+                   url_for)
 from blueprints.models import Assignment
 
 # create a blueprint for exercises

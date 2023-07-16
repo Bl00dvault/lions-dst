@@ -1,7 +1,6 @@
-from blueprints.models import db, User
-from flask import Blueprint, request, render_template, json, redirect, url_for
-from flask_login import login_user, login_required, logout_user, current_user
-
+from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from blueprints.models import User, db
 
 users_blueprint = Blueprint('user', __name__)
 

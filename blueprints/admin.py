@@ -1,8 +1,7 @@
-from flask_login import current_user
-from blueprints.models import db
-from blueprints.models import TestResult, User, Assignment
-from flask import Blueprint, request, render_template, redirect, url_for
 import csv
+from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import current_user
+from blueprints.models import Assignment, TestResult, User, db
 
 admin_blueprint = Blueprint('admin', __name__)
 

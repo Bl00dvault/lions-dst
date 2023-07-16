@@ -1,8 +1,11 @@
-from flask import Blueprint, request, render_template, json, redirect, url_for, session
+import csv
+import time
+from flask import (Blueprint, json, redirect, render_template, request,
+                   session, url_for)
 from flask_login import current_user
-from blueprints.models import TestResult, User, Assignment, db
-from blueprints.exercises import exercises, exercise_questions, exercise_answers
-import time, csv
+from blueprints.exercises import (exercise_answers, exercise_questions,
+                                  exercises)
+from blueprints.models import Assignment, TestResult, User, db
 
 results_blueprint = Blueprint('results', __name__)
 
