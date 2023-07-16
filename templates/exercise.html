@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-    Lions Web PTT - {{ exercises[id] }}
+    Lions Web PTT - {{ exercise_name }}
 {% endblock %}
 {% block content %}
-    <h1>{{ exercises[id] }}</h1>
-    <form action="{{ url_for('result', id=id) }}" method="POST">
+    <h1>{{ exercise_name }} Assessment</h1>
+    <form action="{{ url_for('results.result', id=id) }}" method="POST">
         <input type="hidden" name="exercise_id" value="{{ id }}">
         {% for question, answer in zip(questions, answers) %}
         <div class="question">
@@ -16,7 +16,7 @@
         {% endfor %}
         <button type="submit" class="btn">Submit</button>
         <a href="/" class="btn">Return to Home</a>
-        <a href="{{ url_for('exercise_landing_page', id=id) }}" class="btn">Back to {{ exercise_name }} Landing Page</a>
-        <a href="{{ url_for('exercise_clear', id=id) }}" class="btn">Clear Answers</a>
+        <a href="{{ url_for('exercises.exercise_landing_page', id=id) }}" class="btn">Back to {{ exercise_name }} Landing Page</a>
+        <a href="{{ url_for('exercises.exercise_clear', id=id) }}" class="btn">Clear Answers</a>
     </form>
 {% endblock %}

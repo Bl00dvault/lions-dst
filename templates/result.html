@@ -28,6 +28,6 @@
         <p>Score: {{test_result.score }} %</p>
         <p>Time to Complete: {{test_result.time_to_complete }} seconds</p>
     </div>
-    <a href="{{ url_for('exercise_assessment', id=id) }}" class="btn">Back to {{ exercise_name }} Assessment</a>
+    <a href="{{ url_for('exercises.exercise_assessment', id=id) }}" class="btn">Back to {{ exercise_name }} Assessment</a>
     <a href="/" class="btn">Return to Home</a>
 {% endblock %}

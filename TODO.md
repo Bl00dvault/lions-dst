@@ -61,8 +61,8 @@
   - [ ] Displaying academics
   - [ ] Displaying lab guides
   - [ ] User management
-- [ ] Separate out app.py into logical pieces using imports
-  - [ ] Utilize blueprints
+- [x] 7/16 Separate out app.py into logical pieces using imports
+  - [x] 7/16 Utilize blueprints
 - [ ] Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 
 ## Cyber Trials
