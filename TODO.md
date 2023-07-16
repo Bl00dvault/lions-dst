@@ -40,7 +40,7 @@
 
 ## Packaging
 - [x] 7/10 Create a dockerfile for easy transport of the webserver
-  - [ ] Need to create a volume to store academics
+  - [x] 7/16 Need to create a volume to store academics
   - [ ] Create procedure for uploading new academics to docker volume
 - [x] 7/10 Test locally
 - [ ] Test at work
