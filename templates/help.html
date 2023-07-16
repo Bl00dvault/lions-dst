@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}
+    Lions Web PTT - Help
+{% endblock %}
+{% block content %}
+    <div id="content-track" style="width: 45em;">
+        <h1>How to Use This Site</h1>
+        <p>For help with the Lions Web PTT, please contact SSgt Thomas Blauvelt</p>
+        <h4>For All Users</h4>
+    
+        <h5>Logging In</h5>
+        <p>
+            You can log in to the site by clicking on the "Login" button at the top of the page. You will need to provide your username and password.
+        </p>
+    
+        <h5>Changing Your Password</h5>
+        <p>
+            If you wish to change your password, first log in, then click on the dropdown menu in the top left, select "Change Password". You will be asked to provide your current password, and then your new password twice for confirmation.
+        </p>
+    
+        <h5>Logging Out</h5>
+        <p>
+            To log out of the site, simply click on your username at the top of the page, then select "Logout" from the dropdown menu.
+        </p>
+
+        <h5>Taking an Assessment</h5>
+        <p>
+            To take an assessment, navigate to the "Courses" page from the dropdown menu in the top left. Click on the exercise you wish to attempt.
+        </p>
+        <p>
+            Use the Academics to reference, and the lab guide to guide you through an exercise.
+        </p>
+        <p>
+            Then answer each question from the Assessment and click "Submit" at the end. You will be able to see your results immediately.
+        </p>
+        {% if current_user.is_admin %}
+            <h4>For Admins</h4>
+    
+            <h5>User Management</h5>
+            <p>
+                As an admin, you have the ability to manage users. To do this, navigate to "User Management" under the dropdown menu in the top left. Here, you can view a list of all users, create new users, change a user's password, or delete a user.
+            </p>
+    
+            <h5>Creating New Users</h5>
+            <p>
+                To create a new user, navigate to "User Management" under the dropdown menu in the top left, then select "Create User". You will need to provide a username and password for the new user. You also have the option to make the new user an admin.
+            </p>
+    
+            <h5>Changing User Passwords</h5>
+            <p>
+                To change a user's password, navigate to "User Management" under the dropdown menu in the top left, then select "Change User Password". You will need to select a user and provide a new password.
+            </p>
+    
+            <h5>Deleting Users</h5>
+            <p>
+                To delete a user, navigate to "User Management" under the dropdown menu in the top left, then select "Delete User". You will need to confirm your choice before the user is deleted.
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}

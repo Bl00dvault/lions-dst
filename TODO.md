@@ -8,7 +8,7 @@
   - [x] 7/7 Add error checking so you can't delete your own user
   - [x] 7/7 Add ability to see admins on the page
   - [x] 7/7 Add function to make a user admin
-  - [ ] Add error checking to show message if already an admin
+  - [ ] Add error checking to show message if user is already an admin
 - [x] 7/7 Add admin only page to show current users
 - [x] 7/8 Add storing user test scores per assignment (with additional data such as time to complete, right/wrong answers, etc.)
 - [x] 7/10 Add option to be able to export test scores to a file
@@ -63,7 +63,7 @@
   - [ ] User management
 - [x] 7/16 Separate out app.py into logical pieces using imports
   - [x] 7/16 Utilize blueprints
-- [ ] Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
+- [x] 7/16 Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials

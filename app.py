@@ -83,6 +83,10 @@ def inject_version():
 def home():
     return render_template('index.html', exercises=exercises, tracks=exercises_by_track, current_user=current_user)
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
 if __name__ == '__main__':
     with app.app_context():
         init_db()
