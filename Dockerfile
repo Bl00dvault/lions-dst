@@ -11,9 +11,9 @@ ADD . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Define volumes
-VOLUME /static/academics
-VOLUME /db
-VOLUME /scores
+VOLUME /app/static/academics
+VOLUME /app/db
+VOLUME /app/scores
 
 # Make port 80 available to the world outside this container
 EXPOSE 5001

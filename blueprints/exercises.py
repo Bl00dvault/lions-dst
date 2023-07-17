@@ -9,7 +9,7 @@ from blueprints.models import Assignment
 exercises_blueprint = Blueprint('exercises', __name__)
 
 # Load exercise data from a JSON file
-with open('exercises.json', 'r') as file:
+with open('static/academics/exercises.json', 'r') as file:
      exercise_data = json.load(file)
      exercises = {str(i+1): ex["ExerciseName"] for i, ex in enumerate(exercise_data)}
      exercise_track = {str(i+1): ex["Track"] for i, ex in enumerate(exercise_data)}

@@ -64,6 +64,7 @@
 - [x] 7/16 Separate out app.py into logical pieces using imports
   - [x] 7/16 Utilize blueprints
 - [x] 7/16 Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
+- [ ] Add way for application to re-read exercises.json without having to restart the application/container
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials

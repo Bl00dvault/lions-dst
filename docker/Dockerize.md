@@ -17,5 +17,19 @@ https://docs.docker.com/desktop/install/windows-install/
 5. Transfer .tar file to another machine
 6. To load docker image:  
 ```docker load -i web-ptt.tar```
-7. To run:  
- ```docker run -v ~/lion-web-ptt/academics:/static/academics ~/lion-web-ptt/db:/db -v ~/lion-web-ptt/scores:/scores -p 5001:5001 -d web-ptt```
+7. Copy static files to the new machine (/static/academics folder)
+8. To run:  
+ ```docker run -v ~/lion-web-ptt/academics:/app/static/academics -v ~/lion-web-ptt/db:/app/db -v ~/lion-web-ptt/scores:/app/scores -p 5001:5001 -d web-ptt```
+
+ ## Troubleshooting
+- If you get an error that the port is already in use, you can find the process using the port with:
+   - ```netstat -ano | findstr :5001```
+   - ```taskkill /PID <PID> /F```
+
+- If vmmem is using a lot of memory you can stop it with:
+   - ```wsl --shutdown```
+
+- When adding new exercises/academics files you'll need to restart the docker container:
+   - ```docker ps```
+   - ```docker stop <CONTAINER ID>```
+   - ```docker start <CONTAINER ID>```

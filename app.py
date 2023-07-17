@@ -11,7 +11,7 @@ from blueprints.models import Assignment, Question, User, db
 from blueprints.results import results_blueprint
 from blueprints.users import users_blueprint
 
-__version__ = '2.1.1'
+__version__ = '2.1.2'
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -20,7 +20,6 @@ app.register_blueprint(exercises_blueprint, url_prefix='/exercise')
 app.register_blueprint(results_blueprint, url_prefix='/results')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
-
 
 app.jinja_env.globals.update(zip=zip)
 app.secret_key = keys.secret_key
@@ -56,7 +55,7 @@ def init_db():
 
 with app.app_context():
     init_db()
-    with open('exercises.json', 'r') as file:
+    with open('static/academics/exercises.json', 'r') as file:
         data = json.load(file)
 
     for exercise in data:
