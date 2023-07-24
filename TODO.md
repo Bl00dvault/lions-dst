@@ -13,6 +13,7 @@
 - [x] 7/8 Add storing user test scores per assignment (with additional data such as time to complete, right/wrong answers, etc.)
 - [x] 7/10 Add option to be able to export test scores to a file
   - [ ] Formatting is kinda sloppy, need to fix
+- [ ] Add ability to add multiple users at once with the same password (new class function)
 
 ## UI
 - [x] 7/7 Pretty up UI, and add 32 WPS logo to title
