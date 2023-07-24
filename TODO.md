@@ -41,7 +41,7 @@
 ## Packaging
 - [x] 7/10 Create a dockerfile for easy transport of the webserver
   - [x] 7/16 Need to create a volume to store academics
-  - [ ] Create procedure for uploading new academics to docker volume
+  - [x] 7/16 Create procedure for uploading new academics to docker volume
 - [x] 7/10 Test locally
 - [ ] Test at work
 
@@ -65,6 +65,7 @@
   - [x] 7/16 Utilize blueprints
 - [x] 7/16 Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 - [ ] Add way for application to re-read exercises.json without having to restart the application/container
+- [ ] Fix URL duplicating under exercises e.g., 'http://localhost:5001/exercise/exercise/4'
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials

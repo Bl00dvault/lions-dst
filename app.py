@@ -11,7 +11,7 @@ from blueprints.models import Assignment, Question, User, db
 from blueprints.results import results_blueprint
 from blueprints.users import users_blueprint
 
-__version__ = '2.1.2'
+__version__ = '2.1.3'
 
 app = Flask(__name__, static_url_path='/static')
 
