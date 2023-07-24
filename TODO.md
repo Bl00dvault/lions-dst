@@ -66,6 +66,7 @@
 - [x] 7/16 Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 - [ ] Add way for application to re-read exercises.json without having to restart the application/container
 - [ ] Fix URL duplicating under exercises e.g., 'http://localhost:5001/exercise/exercise/4'
+- [ ] Academics won't render on exercise_landing_page unless the Lab exists as well, add error checking to allow one to exist without the other
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials
