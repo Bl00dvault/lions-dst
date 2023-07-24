@@ -38,6 +38,7 @@
 - [ ] Add option to provide feedback or highlight specific portions of academics/lab guide/assessment that are confusing
 - [ ] Add a way to increment the version of each exercise (whether it was updated from .json or from new .pdf)
 
+
 ## Packaging
 - [x] 7/10 Create a dockerfile for easy transport of the webserver
   - [x] 7/16 Need to create a volume to store academics
@@ -67,6 +68,7 @@
 - [ ] Add way for application to re-read exercises.json without having to restart the application/container
 - [ ] Fix URL duplicating under exercises e.g., 'http://localhost:5001/exercise/exercise/4'
 - [ ] Academics won't render on exercise_landing_page unless the Lab exists as well, add error checking to allow one to exist without the other
+- [ ] Remove ability to take assessments when not logged in
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials
