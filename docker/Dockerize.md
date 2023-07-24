@@ -21,6 +21,10 @@ https://docs.docker.com/desktop/install/windows-install/
 8. To run:  
  ```docker run -v ~/lion-web-ptt/academics:/app/static/academics -v ~/lion-web-ptt/db:/app/db -v ~/lion-web-ptt/scores:/app/scores -p 5001:5001 -d web-ptt```
 
+## Adding/Changing Academics/Exercises
+- To change exercise questions, edit exercise.json in ~/lion-web-ptt/academics/, save, stop the container, start the container. The exercise will be updated
+- To add/change academics, make sure the academics are in the correct home directory (the home directory of the user who started the docker container [will be root if you used sudo]), place a file with 'Exercise_Name'Academics.pdf or 'Exercise_Name'Lab.pdf where exercise_name is the same name from the top level of the exercise.json, and refresh the page. This should not require a container restart.
+
  ## Troubleshooting
 - If you get an error that the port is already in use, you can find the process using the port with:
    - ```netstat -ano | findstr :5001```
