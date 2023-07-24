@@ -24,6 +24,7 @@
   - [x] 7/8 [Canvas](https://www.youtube.com/watch?v=PVfkFD45hL0)
   - [ ] [Adobe Captivate](https://www.adobe.com/products/captivate.html)
 - [ ] Change menu to be a dropdown sidebar, rather than just a button to allow for growth and submenus
+- [ ] Add more space between questions on the assessment page
 
 ## Exercises
 - [x] 7/7 Add option on results to show the correct answer if you press a button next to the question 
