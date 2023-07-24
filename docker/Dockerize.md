@@ -33,3 +33,5 @@ https://docs.docker.com/desktop/install/windows-install/
    - ```docker ps```
    - ```docker stop <CONTAINER ID>```
    - ```docker start <CONTAINER ID>```
+- Troubleshoot container start
+   - docker logs <CONTAINER ID/INSTANCE ID>
