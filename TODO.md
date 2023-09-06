@@ -13,6 +13,7 @@
 - [x] 7/8 Add storing user test scores per assignment (with additional data such as time to complete, right/wrong answers, etc.)
 - [x] 7/10 Add option to be able to export test scores to a file
   - [ ] Formatting is kinda sloppy, need to fix
+- [ ] Add ability to add multiple users at once with the same password (new class function)
 
 ## UI
 - [x] 7/7 Pretty up UI, and add 32 WPS logo to title
@@ -23,6 +24,7 @@
   - [x] 7/8 [Canvas](https://www.youtube.com/watch?v=PVfkFD45hL0)
   - [ ] [Adobe Captivate](https://www.adobe.com/products/captivate.html)
 - [ ] Change menu to be a dropdown sidebar, rather than just a button to allow for growth and submenus
+- [ ] Add more space between questions on the assessment page
 
 ## Exercises
 - [x] 7/7 Add option on results to show the correct answer if you press a button next to the question 
@@ -37,6 +39,7 @@
 - [ ] Consider adding "close" answers if within X number of characters and provide feedback to student
 - [ ] Add option to provide feedback or highlight specific portions of academics/lab guide/assessment that are confusing
 - [ ] Add a way to increment the version of each exercise (whether it was updated from .json or from new .pdf)
+
 
 ## Packaging
 - [x] 7/10 Create a dockerfile for easy transport of the webserver
@@ -66,6 +69,8 @@
 - [x] 7/16 Add help (?) page to talk through how to use the site (essentially the SOP) one for admins and one for students
 - [ ] Add way for application to re-read exercises.json without having to restart the application/container
 - [ ] Fix URL duplicating under exercises e.g., 'http://localhost:5001/exercise/exercise/4'
+- [ ] Academics won't render on exercise_landing_page unless the Lab exists as well, add error checking to allow one to exist without the other
+- [ ] Remove ability to take assessments when not logged in
 
 ## Cyber Trials
 - [ ] Develop User Stories/System Design layout for Cyber Trials
