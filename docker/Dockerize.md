@@ -33,3 +33,6 @@ https://docs.docker.com/desktop/install/windows-install/
    - ```docker ps```
    - ```docker stop <CONTAINER ID>```
    - ```docker start <CONTAINER ID>```
+
+- Save dependencies for offline use with 
+  - `pip download -r requirements.txt -d ./path/to/download/directory`
