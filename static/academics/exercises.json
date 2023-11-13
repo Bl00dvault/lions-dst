@@ -1,0 +1,48 @@
+[
+    {
+        "ExerciseName": "DST-1",
+        "Track": "DCO",
+        "Questions": {
+            "What is the first step in the incident response process?": "Identification",
+            "What is the purpose of a firewall?" : "To control and monitor network traffic",
+            "What is the best practice for creating strong passwords?" : "Using a combination of uppercase and lowercase letters, numbers, and special characters"
+        }
+    },
+    {
+        "ExerciseName": "OST-1",
+        "Track": "OCO",
+        "Questions": {
+            "This is a hard question about OCO": "Classified"
+        }
+    },
+    {
+        "ExerciseName": "WST-1",
+        "Track": "Combined",
+        "Questions": {
+            "What user is attempting lateral movement on test.com network?": "some nerd",
+            "What user is attempting privilege escalation on AD1 device?": "bad guy",
+            "What is the timestamp of the first detected malicious activity?": "XX:XX:XX"
+        }
+    },
+    {
+        "ExerciseName": "WST-2",
+        "Track": "Combined",
+        "Questions": {
+            "What port did the adversary use for C2?": "8081",
+            "What was the C2 IP address?": "X.X.X.254",
+            "What port did the adversary use for persistence?": "8080",
+            "What was the application used for initial access?": "powershell.exe",
+            "What was the initial access application renamed to?": "winword.exe",
+            "What was the initial target?": "Client1",
+            "What was the second target?": "DC01",
+            "What exploit was used to access the second target?": "eternal romance",
+            "What was the command used on the second target for persistence?": "net user /add BrockHard",
+            "What was the artifact left behind?": "BrockHard",
+            "Besides Persistence, what other MITRE tactic was accomplished on the second target?": "credential access",
+            "What was the third target?": "Client3",
+            "What was the malicious payload uploaded for persistence?": "chromeupdater.exe",
+            "What was the command line argument used to execute persistence?": "schtask /TN …",
+            "What file(s) were exfiltrated": "viccash-bin.c"
+        }
+    }
+]

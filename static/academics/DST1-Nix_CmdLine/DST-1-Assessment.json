@@ -1,0 +1,79 @@
+{
+    "ExerciseName": "DST-1",
+    "Track": "DCO",
+    "Available": "DATE",
+    "Questions": {
+        "Q1": {
+            "Question" : "Can you login to the system using SSH?",
+            "Hint": "The default username is 'agent' and password is 'mission'\nEnter the ssh command, followed by a space and the password",
+            "Answer": "ssh agent@<IP_ADDRESS> mission",
+            "Guide": ""
+        },
+        "Q2": {
+            "Question" : "Can you find a hidden file with a 'read' permission denied error and figure out how to read it?",
+            "Hint": "Some commands like 'chmod' might be useful.",
+            "Answer" : "Flag{mamba_hidden}",
+            "Guide" : "find /home -name .hiddenfile 2>/dev/null \nsudo chmod 644 /home/agent/.hiddenfile\ncat /home/agent/.hiddenfile"
+        },
+        "Q3": {
+            "Question": "Can you identify a suspicious running process?",
+            "Hint": "'ps', 'top', and 'htop' are your friends.",
+            "Answer" : "Flag{mamba_on_the_move}",
+            "Guide" : "ps aux | grep \"Flag\"\nThe name of the process (i.e., the text file it's tailing) is the flag."
+        },
+        "Q4": {
+            "Question": "Can you review the system logs and find any unusual activity?",
+            "Hint": "Check out the logs in '/var/log'",
+            "Answer": "Flag{mamba_spotted}",
+            "Guide": "sudo cat /var/log/syslog | grep \"Flag\""
+        },
+        "Q5": {
+            "Question": "Can you find a hidden directory in the '/home' directory?",
+            "Hint": "'ls' has some interesting flags",
+            "Answer": "Flag{mamba_hideout_found}",
+            "Guide": "ls -la /home/agent/\ncat /home/agent/.hidden_directory/flag.txt"
+        },
+        "Q6": {
+            "Question": "Can you find the command in the user history that was used to encode a secret message?",
+            "Hint": "Bash keeps a history of commands",
+            "Answer": "Flag{mamba_moves_tracked}",
+            "Guide": "history | grep \"Flag\""
+        },
+        "Q7": {
+            "Question": "Can you change the ownership of a file owned by 'root' in the home directory?",
+            "Hint": "You may need to use 'sudo' and 'chown'",
+            "Answer": "Flag{mamba_claimed_new_territory}",
+            "Guide": "sudo chown agent:agent /home/agent/root_file.txt\ncat /home/agent/root_file.txt"
+        },
+        "Q8": {
+            "Question": "Can you inspect the crontab for any suspicious jobs?",
+            "Hint": "'crontab -l' lists all the jobs",
+            "Answer": "Flag{mamba_scheduled_to_move}",
+            "Guide": "crontab -l\nThe echo command in the cron job is printing the flag"
+        },
+        "Q9": {
+            "Question": "A message has been split into multiple parts and scattered in different directories. Can you find and reconstruct the message?",
+            "Hint": "The 'find' command can be very useful",
+            "Answer": "Flag{mamba_message_retrieved}",
+            "Guide": "find / -name message_part*.txt -print0 2>/dev/null | sort -z | xargs -0 cat"
+        },
+        "Q10": {
+            "Question": "Can you find the flag hidden in an environment variable?",
+            "Hint": "The 'env' command lists all environment variables",
+            "Answer": "Flag{mamba_breathes_in_the_wild}",
+            "Guide": "source ~/.bashrc\necho $FLAG"
+        },
+        "Q11": {
+            "Question": "Can you find the open port which sends a flag when connected to?",
+            "Hint": "Use 'netstat' to find open ports and 'nc' to connect",
+            "Answer": "Flag{mamba_calls_for_help}",
+            "Guide": "netstat -tuln\nnc localhost 8888"
+        },
+        "Q12": {
+            "Question": "A text file has been encoded using base64. Can you decipher it?",
+            "Hint": "'base64' command might be useful",
+            "Answer": "Flag{mamba_location_decoded}",
+            "Guide": "base64 -d /home/agent/encoded_message.txt"
+        }
+    }
+}

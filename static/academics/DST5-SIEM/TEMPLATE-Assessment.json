@@ -1,0 +1,79 @@
+{
+    "ExerciseName": "DST-#",
+    "Track": "DCO",
+    "Available": "DATE",
+    "Questions": {
+        "Q1": {
+            "Question" : "Copy the 'running-svcs.csv' from Client01 to your ops station in 'C:\\Down' folder\n",
+            "Hint": "Use a $Session variable here",
+            "Answer": "Copy-Item '.\\running-svcs.csv' -Destination 'C:\\Down' -FromSession $Session",
+            "Guide": "$cred = Get-Credential\n$Session = New-PSSession -ComputerName Client01 -Credential $cred\nCopy-Item '.\\running-svcs.csv' -Destination 'C:\\Down' -FromSession $Session"
+        },
+        "Q2": {
+            "Question" : " ",
+            "Hint": " ",
+            "Answer" : " ",
+            "Guide" : " "
+        },
+        "Q3": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer" : " ",
+            "Guide" : " "
+        },
+        "Q4": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q5": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q6": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q7": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q8": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q9": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q10": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q11": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        },
+        "Q12": {
+            "Question": " ",
+            "Hint": " ",
+            "Answer": " ",
+            "Guide": " "
+        }
+    }
+}

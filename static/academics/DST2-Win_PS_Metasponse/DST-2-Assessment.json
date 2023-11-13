@@ -1,0 +1,85 @@
+{
+    "ExerciseName": "DST-1",
+    "Track": "DCO",
+    "Available": "DATE",
+    "Questions": {
+        "Q1": {
+            "Question" : "Can you find what Powershell commands are available on the remote system?",
+            "Hint": "The command doesn't require any arguments",
+            "Answer": "Invoke-Command -ComputerName Client01 -Scriptblock {Get-Command}",
+            "Guide": "You could enter a PSSession, but for this question just run a single command remotely"
+        },
+        "Q2": {
+            "Question" : "Find a cmdlet to display all the services on your ops station",
+            "Answer": "Get-Service",
+            "Guide": "Get-Command | findstr /i service"
+        },
+        "Q3": {
+            "Question" : "Using the same cmdlet to display services, show only the running services",
+            "Answer": "Get-Service | Where-Object Status -eq 'Running'",
+            "Guide": ""
+        },
+        "Q4": {
+            "Question" : "Create a session on Client01 using PSRemoting",
+            "Answer": "New-PSSession -ComputerName Client01 -Credential $cred",
+            "Guide": "Get-Help New-PSSession\n Note: The answer is a one liner with variables, we're assuming you filled the variables correctly. The session is not created in a variable"
+        },
+        "Q5": {
+            "Question" : "On the remote system, get the list of running services, and export it to CSV in the current directory as 'running-svcs.csv' .",
+            "Answer": "Invoke-Command -Session $Session -ScriptBlock {Get-Service | Where-Object Status -eq 'Running' | Export-CSV -Path .\\running-svcs.csv",
+            "Guide": "Combine the answers to Q1 and Q3 and add Export-CSV"
+        },
+        "Q6": {
+            "Question" : "Copy the 'running-svcs.csv' from Client01 to your ops station in 'C:\\Down' folder\n",
+            "Hint": "Use a $Session variable here",
+            "Answer": "Copy-Item '.\\running-svcs.csv' -Destination 'C:\\Down' -FromSession $Session",
+            "Guide": "$cred = Get-Credential\n$Session = New-PSSession -ComputerName Client01 -Credential $cred\nCopy-Item '.\\running-svcs.csv' -Destination 'C:\\Down' -FromSession $Session"
+        },
+        //Create Metasponse questions
+        //TODO
+        "Q7": {
+            "Question" : "Execute Accounts collector against Client01",
+            "Answer": "",
+            "Guide": ""
+        },
+        //TODO
+        "Q8": {
+            "Question" : "Execute Survey collector against Client01",
+            "Answer": "",
+            "Guide": ""
+        },
+        //TODO
+        "Q9": {
+            "Question" : "Using the Metasponse output, use Powershell to show only the local admin account",
+            "Answer": "",
+            "Guide": ""
+        },
+        //Create finding Metasploit questions
+        //TODO
+        "Q10": {
+            "Question" : "Find the malicious process created on Client01 using Metasponse",
+            "Answer": "",
+            "Guide": ""
+        },
+        "Q11": {
+            "Question" : "Find the malicious process created on Client01 using PowerShell",
+            "Answer": "",
+            "Guide": ""
+        },
+        "Q12": {
+            "Question" : "Find the malicious service executable on Client01 using Metasponse",
+            "Answer": "",
+            "Guide": ""
+        },
+        "Q13": {
+            "Question" : "Find the malicious service executable on Client01 using PowerShell",
+            "Answer": "",
+            "Guide": ""
+        },
+        "Q14": {
+            "Question" : "",
+            "Answer": "",
+            "Guide": ""
+        }
+    }
+}
